@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<link href="//cdn.staticfile.org/KaTeX/0.7.1/katex.min.css"rel="stylesheet">
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/luz.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/luz.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/luz.png?v=6.3.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="LinkSolutionAAA树的模板题。然而调了很长时间 关于标记在一个数据结构中，对于一条信息，不可以同时存在两个功能相同的标记覆盖到它，因为这样会使标记合并的过程紊乱。好吧我知道这是常识但我确确实实刚刚发现 对于                       的标记，因为需要同时修改链和子树，所以需要两种标记。 首先链的标记mchmchmch是没跑了，其次还需要一个修改子树的标记。 在翱犇和z">
+<meta name="keywords" content="动态树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BZOJ 3153 Sone1">
+<meta property="og:url" content="http://lucida.site/BZOJ3153/index.html">
+<meta property="og:site_name" content="Hey,Lucida is back.">
+<meta property="og:description" content="LinkSolutionAAA树的模板题。然而调了很长时间 关于标记在一个数据结构中，对于一条信息，不可以同时存在两个功能相同的标记覆盖到它，因为这样会使标记合并的过程紊乱。好吧我知道这是常识但我确确实实刚刚发现 对于                       的标记，因为需要同时修改链和子树，所以需要两种标记。 首先链的标记mchmchmch是没跑了，其次还需要一个修改子树的标记。 在翱犇和z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-18T10:23:51.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BZOJ 3153 Sone1">
+<meta name="twitter:description" content="LinkSolutionAAA树的模板题。然而调了很长时间 关于标记在一个数据结构中，对于一条信息，不可以同时存在两个功能相同的标记覆盖到它，因为这样会使标记合并的过程紊乱。好吧我知道这是常识但我确确实实刚刚发现 对于                       的标记，因为需要同时修改链和子树，所以需要两种标记。 首先链的标记mchmchmch是没跑了，其次还需要一个修改子树的标记。 在翱犇和z">
+
+
+
+
+
+
+  <link rel="canonical" href="http://lucida.site/BZOJ3153/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>BZOJ 3153 Sone1 | Hey,Lucida is back.</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey,Lucida is back.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">CS</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />friends</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lucida.site/BZOJ3153/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lucida">
+      <meta itemprop="description" content="It's been a while.">
+      <meta itemprop="image" content="/images/luz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey,Lucida is back.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BZOJ 3153 Sone1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2017-02-26T00:00:00+08:00">2017-02-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-18 18:23:51" itemprop="dateModified" datetime="2018-06-18T18:23:51+08:00">2018-06-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Link"><a href="#Link" class="headerlink" title="Link"></a><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3153" target="_blank" rel="noopener">Link</a></h1><h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p><del>AAA树的模板题。</del>然而调了很长时间</p>
+<h2 id="关于标记"><a href="#关于标记" class="headerlink" title="关于标记"></a>关于标记</h2><p>在一个数据结构中，<strong>对于一条信息，不可以同时存在两个功能相同的标记覆盖到它</strong>，因为这样会使标记合并的过程紊乱。<del>好吧我知道这是常识但我确确实实刚刚发现</del>
+对于<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="10.464ex" height="2.176ex" style="vertical-align: -0.338ex;" viewbox="0 -791.3 4505.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"/>
+<path stroke-width="1" id="E1-MJMAIN-54" d="M36 443Q37 448 46 558T55 671V677H666V671Q667 666 676 556T685 443V437H645V443Q645 445 642 478T631 544T610 593Q593 614 555 625Q534 630 478 630H451H443Q417 630 414 618Q413 616 413 339V63Q420 53 439 50T528 46H558V0H545L361 3Q186 1 177 0H164V46H194Q264 46 283 49T309 63V339V550Q309 620 304 625T271 630H244H224Q154 630 119 601Q101 585 93 554T81 486T76 443V437H36V443Z"/>
+<path stroke-width="1" id="E1-MJMAIN-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"/>
+<path stroke-width="1" id="E1-MJMAIN-65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-41" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-41" x="750" y="0"/>
+ <use xlink:href="#E1-MJMAIN-41" x="1501" y="0"/>
+ <use xlink:href="#E1-MJMAIN-54" x="2501" y="0"/>
+ <use xlink:href="#E1-MJMAIN-72" x="3224" y="0"/>
+ <use xlink:href="#E1-MJMAIN-65" x="3616" y="0"/>
+ <use xlink:href="#E1-MJMAIN-65" x="4061" y="0"/>
+</g>
+</svg>的标记，因为需要同时修改链和子树，所以需要两种标记。
+首先链的标记<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">mch</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit">c</span><span class="mord mathit">h</span></span></span></span>是没跑了，其次还需要一个修改子树的标记。
+在翱犇和zky的论文和代码中，发现他们都是维护了子树中除了链之外的部分的标记<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>r</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">mre</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">e</span></span></span></span>。我想不通为什么，而且我还用直接记录整个子树的标记<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>l</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">mall</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit" style="margin-right:0.01968em;">l</span></span></span></span>的方法AC了<a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3786" target="_blank" rel="noopener">BZOJ3786</a>，也没有发现什么问题。
+于是我就写了<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>c</mi><mi>h</mi><mo>+</mo><mi>m</mi><mi>a</mi><mi>l</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">mch+mall</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit">c</span><span class="mord mathit">h</span><span class="mbin">+</span><span class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit" style="margin-right:0.01968em;">l</span></span></span></span>。
+改到最后解决其它的所有问题之后狂WA不止。想了很长时间才领悟到这个<del>十分显然的</del>道理：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>c</mi><mi>h</mi><mo separator="true">,</mo><mi>m</mi><mi>a</mi><mi>l</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">mch,mall</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit">c</span><span class="mord mathit">h</span><span class="mpunct">,</span><span class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit" style="margin-right:0.01968em;">l</span></span></span></span>都修改了链的信息，那先来后到就不好安排了。虽然感性地认知一下，应该可以通过一些比较复杂的分类讨论搞定，但我还是选择了改成<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>c</mi><mi>h</mi><mo>+</mo><mi>m</mi><mi>r</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">mch+mre</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit">m</span><span class="mord mathit">c</span><span class="mord mathit">h</span><span class="mbin">+</span><span class="mord mathit">m</span><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">e</span></span></span></span>。</p>
+<h2 id="关于标记下传"><a href="#关于标记下传" class="headerlink" title="关于标记下传"></a>关于标记下传</h2><p>写<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.809ex" height="2.176ex" style="vertical-align: -0.338ex;" viewbox="0 -791.3 2070.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z"/>
+<path stroke-width="1" id="E1-MJMAIN-43" d="M56 342Q56 428 89 500T174 615T283 681T391 705Q394 705 400 705T408 704Q499 704 569 636L582 624L612 663Q639 700 643 704Q644 704 647 704T653 705H657Q660 705 666 699V419L660 413H626Q620 419 619 430Q610 512 571 572T476 651Q457 658 426 658Q322 658 252 588Q173 509 173 342Q173 221 211 151Q232 111 263 84T328 45T384 29T428 24Q517 24 571 93T626 244Q626 251 632 257H660L666 251V236Q661 133 590 56T403 -21Q262 -21 159 83T56 342Z"/>
+<path stroke-width="1" id="E1-MJMAIN-54" d="M36 443Q37 448 46 558T55 671V677H666V671Q667 666 676 556T685 443V437H645V443Q645 445 642 478T631 544T610 593Q593 614 555 625Q534 630 478 630H451H443Q417 630 414 618Q413 616 413 339V63Q420 53 439 50T528 46H558V0H545L361 3Q186 1 177 0H164V46H194Q264 46 283 49T309 63V339V550Q309 620 304 625T271 630H244H224Q154 630 119 601Q101 585 93 554T81 486T76 443V437H36V443Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-4C" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-43" x="625" y="0"/>
+ <use xlink:href="#E1-MJMAIN-54" x="1348" y="0"/>
+</g>
+</svg>的时候总结出一个原则：只有在树的结构修改的时候才需要<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.718ex" height="2.843ex" style="vertical-align: -0.838ex;" viewbox="0 -863.1 3323 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-44" d="M130 622Q123 629 119 631T103 634T60 637H27V683H228Q399 682 419 682T461 676Q504 667 546 641T626 573T685 470T708 336Q708 210 634 116T442 3Q429 1 228 0H27V46H60Q102 47 111 49T130 61V622ZM593 338Q593 439 571 501T493 602Q439 637 355 637H322H294Q238 637 234 628Q231 624 231 344Q231 62 232 59Q233 49 248 48T339 46H350Q456 46 515 95Q561 133 577 191T593 338Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z"/>
+<path stroke-width="1" id="E1-MJMAIN-77" d="M90 368Q84 378 76 380T40 385H18V431H24L43 430Q62 430 84 429T116 428Q206 428 221 431H229V385H215Q177 383 177 368Q177 367 221 239L265 113L339 328L333 345Q323 374 316 379Q308 384 278 385H258V431H264Q270 428 348 428Q439 428 454 431H461V385H452Q404 385 404 369Q404 366 418 324T449 234T481 143L496 100L537 219Q579 341 579 347Q579 363 564 373T530 385H522V431H529Q541 428 624 428Q692 428 698 431H703V385H697Q696 385 691 385T682 384Q635 377 619 334L559 161Q546 124 528 71Q508 12 503 1T487 -11H479Q460 -11 456 -4Q455 -3 407 133L361 267Q359 263 266 -4Q261 -11 243 -11H238Q225 -11 220 -3L90 368Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"/>
+<path stroke-width="1" id="E1-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/>
+<path stroke-width="1" id="E1-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-44" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6F" x="764" y="0"/>
+ <use xlink:href="#E1-MJMAIN-77" x="1265" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6E" x="1987" y="0"/>
+ <use xlink:href="#E1-MJMAIN-28" x="2544" y="0"/>
+ <use xlink:href="#E1-MJMAIN-29" x="2933" y="0"/>
+</g>
+</svg>，这样就避免了通过DFS或者手工栈预先下传一条链的标记(虽然复杂度不受影响但是我觉得代码不优美)
+在<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="10.464ex" height="2.176ex" style="vertical-align: -0.338ex;" viewbox="0 -791.3 4505.5 936.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"/>
+<path stroke-width="1" id="E1-MJMAIN-54" d="M36 443Q37 448 46 558T55 671V677H666V671Q667 666 676 556T685 443V437H645V443Q645 445 642 478T631 544T610 593Q593 614 555 625Q534 630 478 630H451H443Q417 630 414 618Q413 616 413 339V63Q420 53 439 50T528 46H558V0H545L361 3Q186 1 177 0H164V46H194Q264 46 283 49T309 63V339V550Q309 620 304 625T271 630H244H224Q154 630 119 601Q101 585 93 554T81 486T76 443V437H36V443Z"/>
+<path stroke-width="1" id="E1-MJMAIN-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"/>
+<path stroke-width="1" id="E1-MJMAIN-65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-41" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-41" x="750" y="0"/>
+ <use xlink:href="#E1-MJMAIN-41" x="1501" y="0"/>
+ <use xlink:href="#E1-MJMAIN-54" x="2501" y="0"/>
+ <use xlink:href="#E1-MJMAIN-72" x="3224" y="0"/>
+ <use xlink:href="#E1-MJMAIN-65" x="3616" y="0"/>
+ <use xlink:href="#E1-MJMAIN-65" x="4061" y="0"/>
+</g>
+</svg>，其他的部分也可以遵循这个原则从而避免DFS，但是有一个地方是没有办法的：在删除虚子树的时候。
+因为在虚子树的<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.622ex" height="2.509ex" style="vertical-align: -0.671ex;" viewbox="0 -791.3 2420.5 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-53" d="M55 507Q55 590 112 647T243 704H257Q342 704 405 641L426 672Q431 679 436 687T446 700L449 704Q450 704 453 704T459 705H463Q466 705 472 699V462L466 456H448Q437 456 435 459T430 479Q413 605 329 646Q292 662 254 662Q201 662 168 626T135 542Q135 508 152 480T200 435Q210 431 286 412T370 389Q427 367 463 314T500 191Q500 110 448 45T301 -21Q245 -21 201 -4T140 27L122 41Q118 36 107 21T87 -7T78 -21Q76 -22 68 -22H64Q61 -22 55 -16V101Q55 220 56 222Q58 227 76 227H89Q95 221 95 214Q95 182 105 151T139 90T205 42T305 24Q352 24 386 62T420 155Q420 198 398 233T340 281Q284 295 266 300Q261 301 239 306T206 314T174 325T141 343T112 367T85 402Q55 451 55 507Z"/>
+<path stroke-width="1" id="E1-MJMAIN-70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"/>
+<path stroke-width="1" id="E1-MJMAIN-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"/>
+<path stroke-width="1" id="E1-MJMAIN-79" d="M69 -66Q91 -66 104 -80T118 -116Q118 -134 109 -145T91 -160Q84 -163 97 -166Q104 -168 111 -168Q131 -168 148 -159T175 -138T197 -106T213 -75T225 -43L242 0L170 183Q150 233 125 297Q101 358 96 368T80 381Q79 382 78 382Q66 385 34 385H19V431H26L46 430Q65 430 88 429T122 428Q129 428 142 428T171 429T200 430T224 430L233 431H241V385H232Q183 385 185 366L286 112Q286 113 332 227L376 341V350Q376 365 366 373T348 383T334 385H331V431H337H344Q351 431 361 431T382 430T405 429T422 429Q477 429 503 431H508V385H497Q441 380 422 345Q420 343 378 235T289 9T227 -131Q180 -204 113 -204Q69 -204 44 -177T19 -116Q19 -89 35 -78T69 -66Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-53" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-70" x="556" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6C" x="1113" y="0"/>
+ <use xlink:href="#E1-MJMAIN-61" x="1391" y="0"/>
+ <use xlink:href="#E1-MJMAIN-79" x="1892" y="0"/>
+</g>
+</svg>中，只能旋转虚节点。当一个点要被切掉的时候，必须把上方所有的标记都传过来。如果可以转它的话就好办了，但问题就出在这。
+所以经过很长时间的思考，我只好接受了这个现实：从待删除虚子树到其真正父节点的路径上的标记只能手动下传。这个过程还要注意：一定要先向上跳一下到一个虚节点上，再开始不断向上跳。否则的话根本不会向上走。
+还有一个坑点：在存在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">rev</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">e</span><span class="mord mathit" style="margin-right:0.03588em;">v</span></span></span></span>标记的<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.622ex" height="2.509ex" style="vertical-align: -0.671ex;" viewbox="0 -791.3 2420.5 1080.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-53" d="M55 507Q55 590 112 647T243 704H257Q342 704 405 641L426 672Q431 679 436 687T446 700L449 704Q450 704 453 704T459 705H463Q466 705 472 699V462L466 456H448Q437 456 435 459T430 479Q413 605 329 646Q292 662 254 662Q201 662 168 626T135 542Q135 508 152 480T200 435Q210 431 286 412T370 389Q427 367 463 314T500 191Q500 110 448 45T301 -21Q245 -21 201 -4T140 27L122 41Q118 36 107 21T87 -7T78 -21Q76 -22 68 -22H64Q61 -22 55 -16V101Q55 220 56 222Q58 227 76 227H89Q95 221 95 214Q95 182 105 151T139 90T205 42T305 24Q352 24 386 62T420 155Q420 198 398 233T340 281Q284 295 266 300Q261 301 239 306T206 314T174 325T141 343T112 367T85 402Q55 451 55 507Z"/>
+<path stroke-width="1" id="E1-MJMAIN-70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"/>
+<path stroke-width="1" id="E1-MJMAIN-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"/>
+<path stroke-width="1" id="E1-MJMAIN-79" d="M69 -66Q91 -66 104 -80T118 -116Q118 -134 109 -145T91 -160Q84 -163 97 -166Q104 -168 111 -168Q131 -168 148 -159T175 -138T197 -106T213 -75T225 -43L242 0L170 183Q150 233 125 297Q101 358 96 368T80 381Q79 382 78 382Q66 385 34 385H19V431H26L46 430Q65 430 88 429T122 428Q129 428 142 428T171 429T200 430T224 430L233 431H241V385H232Q183 385 185 366L286 112Q286 113 332 227L376 341V350Q376 365 366 373T348 383T334 385H331V431H337H344Q351 431 361 431T382 430T405 429T422 429Q477 429 503 431H508V385H497Q441 380 422 345Q420 343 378 235T289 9T227 -131Q180 -204 113 -204Q69 -204 44 -177T19 -116Q19 -89 35 -78T69 -66Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-53" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-70" x="556" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6C" x="1113" y="0"/>
+ <use xlink:href="#E1-MJMAIN-61" x="1391" y="0"/>
+ <use xlink:href="#E1-MJMAIN-79" x="1892" y="0"/>
+</g>
+</svg>中，自上而下查找也必须要<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.718ex" height="2.843ex" style="vertical-align: -0.838ex;" viewbox="0 -863.1 3323 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-44" d="M130 622Q123 629 119 631T103 634T60 637H27V683H228Q399 682 419 682T461 676Q504 667 546 641T626 573T685 470T708 336Q708 210 634 116T442 3Q429 1 228 0H27V46H60Q102 47 111 49T130 61V622ZM593 338Q593 439 571 501T493 602Q439 637 355 637H322H294Q238 637 234 628Q231 624 231 344Q231 62 232 59Q233 49 248 48T339 46H350Q456 46 515 95Q561 133 577 191T593 338Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z"/>
+<path stroke-width="1" id="E1-MJMAIN-77" d="M90 368Q84 378 76 380T40 385H18V431H24L43 430Q62 430 84 429T116 428Q206 428 221 431H229V385H215Q177 383 177 368Q177 367 221 239L265 113L339 328L333 345Q323 374 316 379Q308 384 278 385H258V431H264Q270 428 348 428Q439 428 454 431H461V385H452Q404 385 404 369Q404 366 418 324T449 234T481 143L496 100L537 219Q579 341 579 347Q579 363 564 373T530 385H522V431H529Q541 428 624 428Q692 428 698 431H703V385H697Q696 385 691 385T682 384Q635 377 619 334L559 161Q546 124 528 71Q508 12 503 1T487 -11H479Q460 -11 456 -4Q455 -3 407 133L361 267Q359 263 266 -4Q261 -11 243 -11H238Q225 -11 220 -3L90 368Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"/>
+<path stroke-width="1" id="E1-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/>
+<path stroke-width="1" id="E1-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-44" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6F" x="764" y="0"/>
+ <use xlink:href="#E1-MJMAIN-77" x="1265" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6E" x="1987" y="0"/>
+ <use xlink:href="#E1-MJMAIN-28" x="2544" y="0"/>
+ <use xlink:href="#E1-MJMAIN-29" x="2933" y="0"/>
+</g>
+</svg>，因为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>e</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">rev</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord mathit">e</span><span class="mord mathit" style="margin-right:0.03588em;">v</span></span></span></span>前后树是完全不同的，不<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="7.718ex" height="2.843ex" style="vertical-align: -0.838ex;" viewbox="0 -863.1 3323 1223.9" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E1-MJMAIN-44" d="M130 622Q123 629 119 631T103 634T60 637H27V683H228Q399 682 419 682T461 676Q504 667 546 641T626 573T685 470T708 336Q708 210 634 116T442 3Q429 1 228 0H27V46H60Q102 47 111 49T130 61V622ZM593 338Q593 439 571 501T493 602Q439 637 355 637H322H294Q238 637 234 628Q231 624 231 344Q231 62 232 59Q233 49 248 48T339 46H350Q456 46 515 95Q561 133 577 191T593 338Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z"/>
+<path stroke-width="1" id="E1-MJMAIN-77" d="M90 368Q84 378 76 380T40 385H18V431H24L43 430Q62 430 84 429T116 428Q206 428 221 431H229V385H215Q177 383 177 368Q177 367 221 239L265 113L339 328L333 345Q323 374 316 379Q308 384 278 385H258V431H264Q270 428 348 428Q439 428 454 431H461V385H452Q404 385 404 369Q404 366 418 324T449 234T481 143L496 100L537 219Q579 341 579 347Q579 363 564 373T530 385H522V431H529Q541 428 624 428Q692 428 698 431H703V385H697Q696 385 691 385T682 384Q635 377 619 334L559 161Q546 124 528 71Q508 12 503 1T487 -11H479Q460 -11 456 -4Q455 -3 407 133L361 267Q359 263 266 -4Q261 -11 243 -11H238Q225 -11 220 -3L90 368Z"/>
+<path stroke-width="1" id="E1-MJMAIN-6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"/>
+<path stroke-width="1" id="E1-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/>
+<path stroke-width="1" id="E1-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMAIN-44" x="0" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6F" x="764" y="0"/>
+ <use xlink:href="#E1-MJMAIN-77" x="1265" y="0"/>
+ <use xlink:href="#E1-MJMAIN-6E" x="1987" y="0"/>
+ <use xlink:href="#E1-MJMAIN-28" x="2544" y="0"/>
+ <use xlink:href="#E1-MJMAIN-29" x="2933" y="0"/>
+</g>
+</svg>就会找到错误的节点。</p>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><p>同样的东西，人家写200+，我写400+。吐槽自己一下。
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Code by Lucida</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> get(x) scanf(<span class="meta-string">"%d"</span>,&amp;x)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> put(x) printf(<span class="meta-string">"%d"</span>,x)</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::max;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::min;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::pair;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::make_pair;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::fill;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::swap;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN=<span class="number">100000</span>+<span class="number">11</span>,INF=INT_MAX;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Mark</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> k,b;</span><br><span class="line">	Mark(<span class="keyword">int</span> k=<span class="number">1</span>,<span class="keyword">int</span> b=<span class="number">0</span>):k(k),b(b)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">operator</span> <span class="params">()</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> sz=<span class="number">1</span>)</span> </span>&#123;<span class="keyword">return</span> k*x+sz*b;&#125;</span><br><span class="line">	Mark &amp;<span class="keyword">operator</span> +=(Mark a)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> dk=k*a.k,db=b*a.k+a.b;</span><br><span class="line">		k=dk,b=db;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> !=(Mark a) &#123;<span class="keyword">return</span> k!=a.k || b!=a.b;&#125;</span><br><span class="line">&#125;nMark;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> minv,maxv,sumv,sz;</span><br><span class="line">	Data(<span class="keyword">int</span> minv=INF,<span class="keyword">int</span> maxv=-INF,<span class="keyword">int</span> sumv=<span class="number">0</span>,<span class="keyword">int</span> sz=<span class="number">0</span>):minv(minv),maxv(maxv),sumv(sumv),sz(sz)&#123;&#125;</span><br><span class="line">	Data &amp;<span class="keyword">operator</span> +=(Mark b)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(sz)</span><br><span class="line">		&#123;</span><br><span class="line">			minv=b(minv);</span><br><span class="line">			maxv=b(maxv);</span><br><span class="line">			sumv=b(sumv,sz);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;nData;</span><br><span class="line"></span><br><span class="line">Data <span class="keyword">operator</span> +(Data a,Data b)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> Data(min(a.minv,b.minv),</span><br><span class="line">				max(a.maxv,b.maxv),</span><br><span class="line">				a.sumv+b.sumv,</span><br><span class="line">				a.sz+b.sz);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> AAA</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> SIZE=MAXN&lt;&lt;<span class="number">2</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		Node *son[<span class="number">4</span>],*fa;</span><br><span class="line">		Data se,re,ch,all;</span><br><span class="line">		Mark mch,mre;</span><br><span class="line">		<span class="keyword">bool</span> rev,imag;</span><br><span class="line">		<span class="function"><span class="keyword">int</span> <span class="title">kind</span><span class="params">()</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;++i)</span><br><span class="line">				<span class="keyword">if</span>(fa-&gt;son[i]==<span class="keyword">this</span>)</span><br><span class="line">					<span class="keyword">return</span> i;</span><br><span class="line">			assert(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">bool</span> <span class="title">isRoot</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;<span class="keyword">return</span> type?(!fa-&gt;imag || !imag):(fa-&gt;son[<span class="number">0</span>]!=<span class="keyword">this</span> &amp;&amp; fa-&gt;son[<span class="number">1</span>]!=<span class="keyword">this</span>);&#125;</span><br><span class="line">		Node()</span><br><span class="line">		&#123;</span><br><span class="line">			fill(son,son+<span class="number">4</span>,fa=<span class="number">0</span>);</span><br><span class="line">			se=re=ch=all=nData;</span><br><span class="line">			mch=mre=nMark;</span><br><span class="line">			rev=imag=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Link</span><span class="params">(<span class="keyword">int</span> d,Node *s)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			son[d]=s;</span><br><span class="line">			s-&gt;fa=<span class="keyword">this</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Sets</span><span class="params">(Node *s,<span class="keyword">int</span> d)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			Down();</span><br><span class="line">			son[d]=s;</span><br><span class="line">			s-&gt;fa=<span class="keyword">this</span>;</span><br><span class="line">			Up();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Rev</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Edit</span><span class="params">(Mark,<span class="keyword">int</span>)</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Up</span><span class="params">()</span></span>;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Down</span><span class="params">()</span></span>;</span><br><span class="line">	&#125;*POOL=(Node*)<span class="built_in">malloc</span>(SIZE*<span class="keyword">sizeof</span>(Node)),*ME=POOL,**BIN=(Node**)<span class="built_in">malloc</span>(SIZE*<span class="keyword">sizeof</span>(Node*)),*null=<span class="keyword">new</span>(ME++) Node,*node[MAXN];</span><br><span class="line">	<span class="keyword">int</span> root;</span><br><span class="line">	<span class="function">Node *<span class="title">newNode</span><span class="params">(<span class="keyword">int</span> val=INF)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node *cur=*BIN?*BIN--:ME++;</span><br><span class="line">		fill(cur-&gt;son,cur-&gt;son+<span class="number">4</span>,cur-&gt;fa=null);</span><br><span class="line">		cur-&gt;re=nData;</span><br><span class="line">		cur-&gt;mch=cur-&gt;mre=nMark;</span><br><span class="line">		cur-&gt;rev=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(val==INF)</span><br><span class="line">		&#123;</span><br><span class="line">			cur-&gt;se=cur-&gt;all=cur-&gt;ch=nData;</span><br><span class="line">			cur-&gt;imag=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			cur-&gt;se=cur-&gt;all=cur-&gt;ch=Data(val,val,val,<span class="number">1</span>);</span><br><span class="line">			cur-&gt;imag=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> cur;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">delNode</span><span class="params">(Node *&amp;pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		*++BIN=pos;</span><br><span class="line">		pos=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> Node::Rev()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span>==null) <span class="keyword">return</span>;</span><br><span class="line">		swap(son[<span class="number">0</span>],son[<span class="number">1</span>]);</span><br><span class="line">		rev^=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> E_ALL=<span class="number">0</span>,E_CH=<span class="number">1</span>,E_RE=<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">void</span> Node::Edit(Mark f,<span class="keyword">int</span> type)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">this</span>==null) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">if</span>(type==E_ALL || type==E_CH)</span><br><span class="line">		&#123;</span><br><span class="line">			se+=f;</span><br><span class="line">			mch+=f;</span><br><span class="line">			ch+=f;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(type==E_ALL || type==E_RE)</span><br><span class="line">		&#123;</span><br><span class="line">			mre+=f;</span><br><span class="line">			re+=f;</span><br><span class="line">		&#125;</span><br><span class="line">		all=ch+re;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> Node::Up()</span><br><span class="line">	&#123;</span><br><span class="line">		ch=son[<span class="number">0</span>]-&gt;ch+son[<span class="number">1</span>]-&gt;ch+se;</span><br><span class="line">		re=son[<span class="number">0</span>]-&gt;re+son[<span class="number">1</span>]-&gt;re+son[<span class="number">2</span>]-&gt;all+son[<span class="number">3</span>]-&gt;all;</span><br><span class="line">		all=ch+re;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">void</span> Node::Down()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(rev)</span><br><span class="line">		&#123;</span><br><span class="line">			son[<span class="number">0</span>]-&gt;Rev();</span><br><span class="line">			son[<span class="number">1</span>]-&gt;Rev();</span><br><span class="line">			rev=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(mre!=nMark)</span><br><span class="line">		&#123;</span><br><span class="line">			son[<span class="number">0</span>]-&gt;Edit(mre,E_RE);</span><br><span class="line">			son[<span class="number">1</span>]-&gt;Edit(mre,E_RE);</span><br><span class="line">			son[<span class="number">2</span>]-&gt;Edit(mre,E_ALL);</span><br><span class="line">			son[<span class="number">3</span>]-&gt;Edit(mre,E_ALL);</span><br><span class="line">			mre=nMark;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(mch!=nMark)</span><br><span class="line">		&#123;</span><br><span class="line">			son[<span class="number">0</span>]-&gt;Edit(mch,E_CH);</span><br><span class="line">			son[<span class="number">1</span>]-&gt;Edit(mch,E_CH);</span><br><span class="line">			mch=nMark;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Trans</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node *fa=pos-&gt;fa,*grf=fa-&gt;fa;</span><br><span class="line">		fa-&gt;Down(),pos-&gt;Down();</span><br><span class="line">		<span class="keyword">int</span> d=pos-&gt;kind();</span><br><span class="line">		<span class="keyword">if</span>(grf!=null)</span><br><span class="line">			grf-&gt;son[fa-&gt;kind()]=pos;</span><br><span class="line">		pos-&gt;fa=grf;</span><br><span class="line">		fa-&gt;Link(d,pos-&gt;son[d^<span class="number">1</span>]);</span><br><span class="line">		pos-&gt;Link(d^<span class="number">1</span>,fa);</span><br><span class="line">		fa-&gt;Up();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> S_LCT=<span class="number">0</span>,S_AAA=<span class="number">2</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Splay</span><span class="params">(Node *pos,<span class="keyword">int</span> type)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(!pos-&gt;isRoot(type))</span><br><span class="line">		&#123;</span><br><span class="line">			Node *fa=pos-&gt;fa;</span><br><span class="line">			<span class="keyword">if</span>(!fa-&gt;isRoot(type))</span><br><span class="line">				Trans(fa-&gt;kind()==pos-&gt;kind()?fa:pos);</span><br><span class="line">			Trans(pos);</span><br><span class="line">		&#125;</span><br><span class="line">		pos-&gt;Up();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">AddVirt</span><span class="params">(Node *pos,Node *fa)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(pos==null) <span class="keyword">return</span>;</span><br><span class="line">		fa-&gt;Down();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;<span class="number">4</span>;++i)</span><br><span class="line">			<span class="keyword">if</span>(fa-&gt;son[i]==null)</span><br><span class="line">			&#123;</span><br><span class="line">				fa-&gt;Sets(pos,i);</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">while</span>(fa-&gt;son[<span class="number">2</span>]-&gt;imag)</span><br><span class="line">			fa=fa-&gt;son[<span class="number">2</span>];</span><br><span class="line">		Splay(fa,S_AAA);</span><br><span class="line">		Node *vi=newNode();</span><br><span class="line">		vi-&gt;Link(<span class="number">2</span>,fa-&gt;son[<span class="number">2</span>]);</span><br><span class="line">		vi-&gt;Link(<span class="number">3</span>,pos);</span><br><span class="line">		fa-&gt;Sets(vi,<span class="number">2</span>);</span><br><span class="line">		Splay(vi,S_AAA);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DelVirt</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(pos==null) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">static</span> Node **top=(Node**)<span class="built_in">malloc</span>(SIZE*<span class="keyword">sizeof</span>(Node*));</span><br><span class="line">		<span class="keyword">for</span>(Node *p=pos-&gt;fa;p-&gt;imag;p=p-&gt;fa) *++top=p;</span><br><span class="line">		<span class="keyword">if</span>(*top) (*top)-&gt;fa-&gt;Down();</span><br><span class="line">		<span class="keyword">for</span>(;*top;top--) (*top)-&gt;Down();</span><br><span class="line">		Node *fa=pos-&gt;fa;</span><br><span class="line">		<span class="keyword">int</span> d=pos-&gt;kind();</span><br><span class="line">		<span class="keyword">if</span>(fa-&gt;imag)</span><br><span class="line">		&#123;</span><br><span class="line">			fa-&gt;fa-&gt;Sets(fa-&gt;son[d^<span class="number">1</span>],fa-&gt;kind());</span><br><span class="line">			Splay(fa-&gt;fa,S_AAA);</span><br><span class="line">			delNode(fa);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			fa-&gt;Sets(null,d);</span><br><span class="line">			Splay(fa,S_AAA);</span><br><span class="line">		&#125;</span><br><span class="line">		pos-&gt;fa=null;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Access</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node *pred=null;</span><br><span class="line">		<span class="keyword">while</span>(pos!=null)</span><br><span class="line">		&#123;</span><br><span class="line">			Splay(pos,S_LCT);</span><br><span class="line">			AddVirt(pos-&gt;son[<span class="number">1</span>],pos);</span><br><span class="line">			DelVirt(pred);</span><br><span class="line">			pos-&gt;Sets(pred,<span class="number">1</span>);</span><br><span class="line">			pred=pos;</span><br><span class="line">			<span class="keyword">for</span>(pos=pos-&gt;fa;pos-&gt;imag;pos=pos-&gt;fa);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Touch</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Access(pos);</span><br><span class="line">		Splay(pos,S_LCT);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">BeRoot</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Touch(pos);</span><br><span class="line">		pos-&gt;Rev();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Link</span><span class="params">(Node *p1,Node *p2)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		BeRoot(p1);</span><br><span class="line">		Touch(p2);</span><br><span class="line">		AddVirt(p1,p2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Cut</span><span class="params">(Node *p1,Node *p2)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		BeRoot(p1);</span><br><span class="line">		Touch(p2);</span><br><span class="line">		p2-&gt;Sets(null,<span class="number">0</span>);</span><br><span class="line">		p1-&gt;fa=null;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">Node *<span class="title">FindRoot</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Touch(pos);</span><br><span class="line">		<span class="keyword">while</span>(pos-&gt;son[<span class="number">0</span>]!=null) </span><br><span class="line">		&#123;</span><br><span class="line">			pos-&gt;Down();</span><br><span class="line">			pos=pos-&gt;son[<span class="number">0</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		Splay(pos,S_LCT);</span><br><span class="line">		<span class="keyword">return</span> pos;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">Node *<span class="title">FindFa</span><span class="params">(Node *pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Touch(pos);</span><br><span class="line">		pos=pos-&gt;son[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">if</span>(pos==null) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(pos-&gt;son[<span class="number">1</span>]!=null) </span><br><span class="line">		&#123;</span><br><span class="line">			pos-&gt;Down();<span class="comment">//Down!!!!!!!</span></span><br><span class="line">			pos=pos-&gt;son[<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		Splay(pos,S_LCT);</span><br><span class="line">		<span class="keyword">return</span> pos;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">ChangeFather</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> father)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(pos==root) <span class="keyword">return</span>;</span><br><span class="line">		Node *fa=FindFa(node[pos]);</span><br><span class="line">		Cut(fa,node[pos]);</span><br><span class="line">		<span class="keyword">if</span>(FindRoot(node[pos])!=FindRoot(node[father]))</span><br><span class="line">			Link(node[pos],node[father]);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			Link(node[pos],fa);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">namespace</span> Chain</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Data <span class="title">Query</span><span class="params">(<span class="keyword">int</span> p1,<span class="keyword">int</span> p2)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			BeRoot(node[p1]);</span><br><span class="line">			Touch(node[p2]);</span><br><span class="line">			<span class="keyword">return</span> node[p2]-&gt;ch;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Edit</span><span class="params">(<span class="keyword">int</span> p1,<span class="keyword">int</span> p2,Mark f)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			BeRoot(node[p1]);</span><br><span class="line">			Touch(node[p2]);</span><br><span class="line">			node[p2]-&gt;Edit(f,E_CH);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">namespace</span> Sub</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Data <span class="title">Query</span><span class="params">(<span class="keyword">int</span> rt)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			Touch(node[rt]);</span><br><span class="line">			<span class="keyword">return</span> node[rt]-&gt;se+node[rt]-&gt;son[<span class="number">2</span>]-&gt;all+node[rt]-&gt;son[<span class="number">3</span>]-&gt;all;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">Edit</span><span class="params">(<span class="keyword">int</span> rt,Mark f)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			Touch(node[rt]);</span><br><span class="line">			node[rt]-&gt;se+=f;</span><br><span class="line">			node[rt]-&gt;son[<span class="number">2</span>]-&gt;Edit(f,E_ALL);</span><br><span class="line">			node[rt]-&gt;son[<span class="number">3</span>]-&gt;Edit(f,E_ALL);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;<span class="keyword">using</span> <span class="keyword">namespace</span> AAA;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> w[MAXN],edge[MAXN][<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> n,m;get(n),get(m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n<span class="number">-1</span>;++i)</span><br><span class="line">		get(edge[i][<span class="number">0</span>]),get(edge[i][<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		get(w[i]);</span><br><span class="line">		node[i]=newNode(w[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	get(root);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n<span class="number">-1</span>;++i)	Link(node[edge[i][<span class="number">0</span>]],node[edge[i][<span class="number">1</span>]]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> opt,x,y,z,Ans;get(opt);</span><br><span class="line">		Data res;</span><br><span class="line">		BeRoot(node[root]);</span><br><span class="line">		<span class="keyword">switch</span>(opt)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">				get(x),get(y);</span><br><span class="line">				Sub::Edit(x,Mark(opt==<span class="number">0</span>?<span class="number">0</span>:<span class="number">1</span>,y));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">				get(root);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			<span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">				get(x),get(y),get(z);</span><br><span class="line">				Chain::Edit(x,y,Mark(opt==<span class="number">2</span>?<span class="number">0</span>:<span class="number">1</span>,z));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">3</span>:<span class="comment">//min</span></span><br><span class="line">			<span class="keyword">case</span> <span class="number">4</span>:<span class="comment">//max</span></span><br><span class="line">			<span class="keyword">case</span> <span class="number">11</span>:<span class="comment">//sum</span></span><br><span class="line">				get(x);</span><br><span class="line">				res=Sub::Query(x);</span><br><span class="line">				<span class="keyword">switch</span>(opt)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">3</span>:Ans=res.minv;<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">4</span>:Ans=res.maxv;<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">11</span>:Ans=res.sumv;<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				put(Ans),<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">7</span>:<span class="comment">//min</span></span><br><span class="line">			<span class="keyword">case</span> <span class="number">8</span>:<span class="comment">//max</span></span><br><span class="line">			<span class="keyword">case</span> <span class="number">10</span>:<span class="comment">//sum</span></span><br><span class="line">				get(x),get(y);</span><br><span class="line">				res=Chain::Query(x,y);</span><br><span class="line">				<span class="keyword">switch</span>(opt)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">7</span>:Ans=res.minv;<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">8</span>:Ans=res.maxv;<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">10</span>:Ans=res.sumv;<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				put(Ans),<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">9</span>:</span><br><span class="line">				get(x),get(y);</span><br><span class="line">				ChangeFather(x,y);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动态树/" rel="tag"># 动态树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/BZOJ1004/" rel="next" title="BZOJ 1004 Cards">
+                <i class="fa fa-chevron-left"></i> BZOJ 1004 Cards
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Catalan/" rel="prev" title="胡扯Calalan数">
+                胡扯Calalan数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/luz.png"
+                alt="Lucida" />
+            
+              <p class="site-author-name" itemprop="name">Lucida</p>
+              <p class="site-description motion-element" itemprop="description">It's been a while.</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">222</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Link"><span class="nav-number">1.</span> <span class="nav-text">Link</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于标记"><span class="nav-number">2.1.</span> <span class="nav-text">关于标记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于标记下传"><span class="nav-number">2.2.</span> <span class="nav-text">关于标记下传</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">3.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lucida</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css" type="text/css">
+
+   
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

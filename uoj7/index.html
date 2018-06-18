@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+<link href="//cdn.staticfile.org/KaTeX/0.7.1/katex.min.css"rel="stylesheet">
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/luz.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/luz.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/luz.png?v=6.3.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Link一道题，说明我斜率优化和CDQ分治都学的一知半解。所以会写的很详细。 Solution30ptsf[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(i,j)≤limt[i]}f[i]=min\{f[j]+dist(i,j)*p[i]+q[i],dist(i,j)\le limt[i]\}f[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(">
+<meta name="keywords" content="DP,分治">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uoj7 购票">
+<meta property="og:url" content="http://lucida.site/uoj7/index.html">
+<meta property="og:site_name" content="Hey,Lucida is back.">
+<meta property="og:description" content="Link一道题，说明我斜率优化和CDQ分治都学的一知半解。所以会写的很详细。 Solution30ptsf[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(i,j)≤limt[i]}f[i]=min\{f[j]+dist(i,j)*p[i]+q[i],dist(i,j)\le limt[i]\}f[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://i1.piimg.com/567571/6cb9831c1d02bbe3.png">
+<meta property="og:updated_time" content="2018-06-18T10:23:51.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="uoj7 购票">
+<meta name="twitter:description" content="Link一道题，说明我斜率优化和CDQ分治都学的一知半解。所以会写的很详细。 Solution30ptsf[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(i,j)≤limt[i]}f[i]=min\{f[j]+dist(i,j)*p[i]+q[i],dist(i,j)\le limt[i]\}f[i]=min{f[j]+dist(i,j)∗p[i]+q[i],dist(">
+<meta name="twitter:image" content="http://i1.piimg.com/567571/6cb9831c1d02bbe3.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://lucida.site/uoj7/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>uoj7 购票 | Hey,Lucida is back.</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hey,Lucida is back.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">CS</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />friends</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lucida.site/uoj7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lucida">
+      <meta itemprop="description" content="It's been a while.">
+      <meta itemprop="image" content="/images/luz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hey,Lucida is back.">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">uoj7 购票
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-02-27 00:00:00" itemprop="dateCreated datePublished" datetime="2017-02-27T00:00:00+08:00">2017-02-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-18 18:23:51" itemprop="dateModified" datetime="2018-06-18T18:23:51+08:00">2018-06-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Link"><a href="#Link" class="headerlink" title="Link"></a><a href="http://uoj.ac/problem/7" target="_blank" rel="noopener">Link</a></h1><p>一道题，说明我斜率优化和CDQ分治都学的一知半解。所以会写的很详细。</p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><h2 id="30pts"><a href="#30pts" class="headerlink" title="30pts"></a>30pts</h2><p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>{</mo><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>∗</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>q</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>≤</mo><mi>l</mi><mi>i</mi><mi>m</mi><mi>t</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>}</mo></mrow><annotation encoding="application/x-tex">f[i]=min\{f[j]+dist(i,j)*p[i]+q[i],dist(i,j)\le limt[i]\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mrel">=</span><span class="mord mathit">m</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mopen">{</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mbin">∗</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mrel">≤</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">i</span><span class="mord mathit">m</span><span class="mord mathit">t</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mclose">}</span></span></span></span>
+用来对拍</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> KISS</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DP</span><span class="params">(<span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		f[pos]=LLONG_MAX;</span><br><span class="line">		<span class="keyword">int</span> par=c[pos].fa;</span><br><span class="line">		ll d=c[pos].s;</span><br><span class="line">		<span class="keyword">while</span>(par &amp;&amp; d&lt;=c[pos].lim)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(chkmn(f[pos],f[par]+d*c[pos].k))</span><br><span class="line">				pre[pos]=par;</span><br><span class="line">			d+=c[par].s;</span><br><span class="line">			par=c[par].fa;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pos!=<span class="number">1</span>) f[pos]+=c[pos].b;</span><br><span class="line">		<span class="keyword">else</span> f[pos]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">			DP(e-&gt;to);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Solve</span><span class="params">()</span></span>&#123;DP(<span class="number">1</span>);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="40pts"><a href="#40pts" class="headerlink" title="40pts"></a>40pts</h2><p>考虑在序列上，无限制的情况。
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>{</mo><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>q</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>}</mo><mo>=</mo><mi>q</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>{</mo><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>}</mo></mrow><annotation encoding="application/x-tex">f[i]=min\{f[j]+dist(i,j)\times p[i]+q[i]\}=q[i]+min\{f[j]+dist(i,j)\times p[i]\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mrel">=</span><span class="mord mathit">m</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mopen">{</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mclose">}</span><span class="mrel">=</span><span class="mord mathit" style="margin-right:0.03588em;">q</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">m</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mopen">{</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mclose">}</span></span></span></span>
+看起来很斜率优化。
+设<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mo>&lt;</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">j&lt; k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mrel">&lt;</span><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span></span>优于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.65952em;"></span><span class="strut bottom" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.05724em;">j</span></span></span></span>当且仅当
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>&gt;</mo><mi>f</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[j]+dist(i,j)\times p[i]&gt; f[k]+dist(i,k)\times p[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mrel">&gt;</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mbin">+</span><span class="mord mathit">d</span><span class="mord mathit">i</span><span class="mord mathit">s</span><span class="mord mathit">t</span><span class="mopen">(</span><span class="mord mathit">i</span><span class="mpunct">,</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span></span></span></span>
+即
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>&gt;</mo><mi>f</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>−</mo><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[j]-len[j]\times p[i]&gt; f[k]-len[k]\times p[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span><span class="mrel">&gt;</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span></span></span></span>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mi>f</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>&gt;</mo><mo>(</mo><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>k</mi><mo>]</mo><mo>)</mo><mo>×</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[j]-f[k]&gt; (len[j]-len[k])\times p[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mrel">&gt;</span><span class="mopen">(</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mclose">)</span><span class="mbin">×</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span></span></span></span>
+给定<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">s&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="base textstyle uncramped"><span class="mord mathit">s</span><span class="mrel">&gt;</span><span class="mord mathrm">0</span></span></span></span>，所以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">len[]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span>递增，可以化为
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi>f</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mi>f</mi><mo>[</mo><mi>k</mi><mo>]</mo></mrow><mrow><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mi>l</mi><mi>e</mi><mi>n</mi><mo>[</mo><mi>k</mi><mo>]</mo></mrow></mfrac><mo>&lt;</mo><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">\dfrac {f[j]-f[k]}{len[j]-len[k]}&lt; p[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.427em;"></span><span class="strut bottom" style="height:2.363em;vertical-align:-0.936em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle displaystyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.686em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle cramped"><span class="mord textstyle cramped"><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.01968em;">l</span><span class="mord mathit">e</span><span class="mord mathit">n</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span></span></span></span><span style="top:-0.2300000000000001em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.677em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped"><span class="mord textstyle uncramped"><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mbin">−</span><span class="mord mathit" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathit" style="margin-right:0.03148em;">k</span><span class="mclose">]</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span><span class="mrel">&lt;</span><span class="mord mathit">p</span><span class="mopen">[</span><span class="mord mathit">i</span><span class="mclose">]</span></span></span></span>
+维护一个下凸壳。
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">p[]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.75em;"></span><span class="strut bottom" style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit">p</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span>并不是递增的，所以不能用单调队列，需要用单调栈+二分。</p>
+<h3 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> NakedOptOnChain</span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		ld slop;<span class="keyword">int</span> id;</span><br><span class="line">		Node()&#123;&#125;</span><br><span class="line">		Node(ld slop,<span class="keyword">int</span> id):slop(slop),id(id)&#123;&#125;</span><br><span class="line">		<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Node &amp;a)<span class="keyword">const</span>&#123;<span class="keyword">return</span> fcmp(slop-a.slop)&lt;<span class="number">0</span>;&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;Q[MAXN];<span class="keyword">int</span> he,ta;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//x坐标单调，k不单调，维护斜率下凸壳，二分查找</span></span><br><span class="line">		<span class="keyword">static</span> ll len[MAXN];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i) len[i]=len[i<span class="number">-1</span>]+c[i].s;</span><br><span class="line">		<span class="keyword">new</span>(&amp;Q[he=ta=<span class="number">1</span>])Node(inf,<span class="number">1</span>);</span><br><span class="line">		<span class="meta">#<span class="meta-keyword">define</span> transfer(j,i) (f[j]+(len[i]-len[j])*c[i].k+c[i].b) </span></span><br><span class="line">		<span class="meta">#<span class="meta-keyword">define</span> slope(y,x) ((ld)(y)/(x))</span></span><br><span class="line">		<span class="meta">#<span class="meta-keyword">define</span> count(x,y) (y-x+1)</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> index=lower_bound(Q+he,Q+ta,Node((ld)c[i].k,<span class="number">0</span>))-Q;</span><br><span class="line">			<span class="keyword">int</span> j=Q[index].id;</span><br><span class="line">			f[i]=min(j!=<span class="number">0</span>?transfer(j,i):LLONG_MAX,transfer(Q[ta].id,i));<span class="comment">//j==0...</span></span><br><span class="line">			<span class="keyword">while</span>(count(he,ta)&gt;=<span class="number">2</span> </span><br><span class="line">			   &amp;&amp; fcmp(Q[ta<span class="number">-1</span>].slop-slope(f[i]-f[Q[ta].id],len[i]-len[Q[ta].id]))&gt;=<span class="number">0</span>) </span><br><span class="line">				ta--;</span><br><span class="line">			Q[ta].slop=slope(f[i]-f[Q[ta].id],len[i]-len[Q[ta].id]);</span><br><span class="line">			Q[++ta]=Node(inf,i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">#<span class="meta-keyword">undef</span> transfer</span></span><br><span class="line">		<span class="meta">#<span class="meta-keyword">undef</span> slope</span></span><br><span class="line">		<span class="meta">#<span class="meta-keyword">undef</span> count</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="50pts"><a href="#50pts" class="headerlink" title="50pts"></a>50pts</h2><p>加上了路径限制。一开始的想法显然就是在单调栈中二分到第一个可以取到的位置，然后再二分查找最优位置，当时觉得应该不行，但也没想出反例。写出来之后WA，发现反例如下
+<img src="http://i1.piimg.com/567571/6cb9831c1d02bbe3.png" alt="">
+所以这样是不行的。。
+而CDQ分治恰好可以对区间的两半分别做一些操作而不影响答案，于是就CDQ分治
+第一维，按照可以到最靠左的点排序；第二维，分治区间
+在统计答案的时候，两个指针都从右向左走，维护满足距离限制的凸壳
+回溯的时候按照标号的大小顺序归并</p>
+<h3 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> DCOnChain</span><br><span class="line">&#123;</span><br><span class="line">	ll len[MAXN];</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Opt</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">int</span> id;ll fr;</span><br><span class="line">		<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Opt &amp;a) <span class="keyword">const</span>&#123;<span class="keyword">return</span> fr&lt;a.fr;&#125;</span><br><span class="line">	&#125;p[MAXN],t[MAXN];</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">CmpID</span><span class="params">(<span class="keyword">const</span> Opt &amp;a,<span class="keyword">const</span> Opt &amp;b)</span></span>&#123;<span class="keyword">return</span> a.id&lt;b.id;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Partition</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> Mid=(L+R)&gt;&gt;<span class="number">1</span>,pl=L,pr=Mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=L;i&lt;=R;++i) t[p[i].id&lt;=Mid?pl++:pr++]=p[i];</span><br><span class="line">		copy(t+L,t+R+<span class="number">1</span>,p+L);</span><br><span class="line">		<span class="keyword">return</span> Mid;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> Mid,<span class="keyword">int</span> R)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		merge(p+L,p+Mid+<span class="number">1</span>,p+Mid+<span class="number">1</span>,p+R+<span class="number">1</span>,t+L,CmpID);</span><br><span class="line">		copy(t+L,t+R+<span class="number">1</span>,p+L);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		ll x,y;<span class="keyword">int</span> id;</span><br><span class="line">		Point()&#123;&#125;</span><br><span class="line">		Point(<span class="keyword">int</span> id):id(id)</span><br><span class="line">		&#123;</span><br><span class="line">			x=len[id];</span><br><span class="line">			y=f[id];</span><br><span class="line">		&#125;</span><br><span class="line">		Point(ll x,ll y):x(x),y(y)&#123;&#125;</span><br><span class="line">		Point <span class="keyword">operator</span> -(<span class="keyword">const</span> Point &amp;a)<span class="keyword">const</span>&#123;<span class="keyword">return</span> Point(x-a.x,y-a.y);&#125;</span><br><span class="line">	&#125;<span class="built_in">stack</span>[MAXN];<span class="keyword">int</span> top;</span><br><span class="line">	<span class="function">ld <span class="title">Outer</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> (ld)a.x*b.y-(ld)a.y*b.x;&#125;<span class="comment">//叉积爆ll没加强转ld..........</span></span><br><span class="line">	<span class="function">ld <span class="title">Slope</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> ((ld)a.y-b.y)/(a.x-b.x);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(ll k)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!top) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> L=<span class="number">1</span>,R=top;</span><br><span class="line">		<span class="keyword">while</span>(L!=R)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> Mid=(L+R+<span class="number">1</span>)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(Mid==<span class="number">1</span> || fcmp(Slope(<span class="built_in">stack</span>[Mid],<span class="built_in">stack</span>[Mid<span class="number">-1</span>])-k)&gt;=<span class="number">0</span>) L=Mid;</span><br><span class="line">			<span class="comment">//stack[top]???....</span></span><br><span class="line">			<span class="keyword">else</span> R=Mid<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">stack</span>[L].id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">transfer</span><span class="params">(<span class="keyword">int</span> j,<span class="keyword">int</span> i)</span> </span>&#123;<span class="keyword">return</span> (f[j]+(len[i]-len[j])*c[i].k+c[i].b);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DC</span><span class="params">(<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(L==R) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> Mid=Partition(L,R);</span><br><span class="line">		DC(L,Mid);</span><br><span class="line">		top=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> pl=Mid,pr=R;pr&gt;Mid;--pr)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> goal=p[pr].id;</span><br><span class="line">			<span class="keyword">while</span>(pl&gt;=L &amp;&amp; len[p[pl].id]&gt;=p[pr].fr)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="function">Point <span class="title">cur</span><span class="params">(p[pl].id)</span></span>;</span><br><span class="line">				<span class="keyword">while</span>(top&gt;=<span class="number">2</span> &amp;&amp; fcmp(Outer(<span class="built_in">stack</span>[top]-<span class="built_in">stack</span>[top<span class="number">-1</span>],cur-<span class="built_in">stack</span>[top]))&gt;=<span class="number">0</span>)<span class="comment">//叉的顺序写反了 </span></span><br><span class="line">					top--;</span><br><span class="line">				<span class="built_in">stack</span>[++top]=cur;</span><br><span class="line">				pl--;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">int</span> best=BinarySearch(c[goal].k);</span><br><span class="line">			<span class="keyword">if</span>(best &amp;&amp; chkmn(f[goal],transfer(best,goal))) pre[goal]=best;</span><br><span class="line">		&#125;</span><br><span class="line">		DC(Mid+<span class="number">1</span>,R);</span><br><span class="line">		Merge(L,Mid,R);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">		&#123;</span><br><span class="line">			len[i]=len[i<span class="number">-1</span>]+c[i].s;	</span><br><span class="line">			p[i].id=i;p[i].fr=len[i]-c[i].lim;</span><br><span class="line">			f[i]=LLONG_MAX;</span><br><span class="line">		&#125;</span><br><span class="line">		f[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">		sort(p+<span class="number">1</span>,p+<span class="number">1</span>+n);</span><br><span class="line">		DC(<span class="number">1</span>,n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="100pts"><a href="#100pts" class="headerlink" title="100pts"></a>100pts</h2><p>这一步做法就非常妙了。
+在树上要满足距离限制，也可以借鉴CDQ分治的思路，把用来更新的点和被更新的点隔离开，就可以分别进行一些操作
+对树点分治，每层找重心，找到重心之后先把重心的父节点对应的子树DC，然后用从重心的父节点开始，沿着父指针一直走到当前层之外，用这条链上满足距离限制的点更新重心的答案，然后把重心也加进这条链。取出剩下的子树中的所有节点，再按照序列上的做法用那条链更新剩下的节点。</p>
+<h3 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> DCOnTree</span><br><span class="line">&#123;</span><br><span class="line">	ll len[MAXN];</span><br><span class="line">	<span class="keyword">bool</span> ud[MAXN]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> sz[MAXN],dep[MAXN];</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Opt</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">int</span> id;ll fr;</span><br><span class="line">		Opt()&#123;&#125;Opt(<span class="keyword">int</span> id,ll fr):id(id),fr(fr)&#123;&#125;</span><br><span class="line">		<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Opt &amp;a) <span class="keyword">const</span>&#123;<span class="keyword">return</span> fr&lt;a.fr;&#125;</span><br><span class="line">	&#125;p[MAXN],t[MAXN];</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">CmpID</span><span class="params">(<span class="keyword">const</span> Opt &amp;a,<span class="keyword">const</span> Opt &amp;b)</span></span>&#123;<span class="keyword">return</span> a.id&lt;b.id;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		ll x,y;<span class="keyword">int</span> id;</span><br><span class="line">		Point()&#123;&#125;</span><br><span class="line">		Point(<span class="keyword">int</span> id):id(id)&#123;x=len[id];y=f[id];&#125;</span><br><span class="line">		Point(ll x,ll y):x(x),y(y)&#123;&#125;</span><br><span class="line">		Point <span class="keyword">operator</span> -(<span class="keyword">const</span> Point &amp;a)<span class="keyword">const</span>&#123;<span class="keyword">return</span> Point(x-a.x,y-a.y);&#125;</span><br><span class="line">	&#125;<span class="built_in">stack</span>[MAXN];<span class="keyword">int</span> top;</span><br><span class="line">	<span class="function">ld <span class="title">Outer</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> (ld)a.x*b.y-(ld)a.y*b.x;&#125;<span class="comment">//叉积爆ll没加强转ld..........</span></span><br><span class="line">	<span class="function">ld <span class="title">Slope</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> ((ld)a.y-b.y)/(a.x-b.x);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">CalSize</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		sz[pos]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">			<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">			CalSize(u,pos);</span><br><span class="line">			sz[pos]+=sz[u];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">DP</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from,<span class="keyword">int</span> tol)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">int</span> f[MAXN]=&#123;INT_MAX&#125;;</span><br><span class="line">		<span class="keyword">int</span> res=<span class="number">0</span>,temp;f[pos]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">			<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">			temp=DP(u,pos,tol);</span><br><span class="line">			<span class="keyword">if</span>(res==<span class="number">0</span> || f[res]&gt;f[temp]) res=temp;</span><br><span class="line">			chkmx(f[pos],sz[u]);</span><br><span class="line">		&#125;</span><br><span class="line">		chkmx(f[pos],tol-sz[pos]<span class="number">-1</span>);</span><br><span class="line">		<span class="keyword">return</span> f[res]&lt;f[pos]?res:pos;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Center</span><span class="params">(<span class="keyword">int</span> rt)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		CalSize(rt,<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">return</span> DP(rt,<span class="number">0</span>,sz[rt]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Others</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from,Opt *p,<span class="keyword">int</span> &amp;pc)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!ud[pos]) p[++pc]=Opt(pos,len[pos]-c[pos].lim);</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">			<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">			Others(u,pos,p,pc);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(ll k)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!top) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> L=<span class="number">1</span>,R=top;</span><br><span class="line">		<span class="keyword">while</span>(L!=R)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> Mid=(L+R+<span class="number">1</span>)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(Mid==<span class="number">1</span> || fcmp(Slope(<span class="built_in">stack</span>[Mid],<span class="built_in">stack</span>[Mid<span class="number">-1</span>])-k)&gt;=<span class="number">0</span>) L=Mid;</span><br><span class="line">			<span class="comment">//stack[top]???....</span></span><br><span class="line">			<span class="keyword">else</span> R=Mid<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">stack</span>[L].id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ll <span class="title">transfer</span><span class="params">(<span class="keyword">int</span> j,<span class="keyword">int</span> i)</span> </span>&#123;<span class="keyword">return</span> (f[j]+(len[i]-len[j])*c[i].k+c[i].b);&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">DC</span><span class="params">(<span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!pos || ud[pos]) <span class="keyword">return</span>;</span><br><span class="line">		<span class="keyword">int</span> gc=Center(pos);</span><br><span class="line">		<span class="keyword">int</span> above=gc;</span><br><span class="line">		<span class="keyword">while</span>(!ud[above]) above=c[above].fa; </span><br><span class="line">		ud[gc]=<span class="number">1</span>;</span><br><span class="line">		DC(c[gc].fa);<span class="comment">//</span></span><br><span class="line">		<span class="keyword">int</span> pc=<span class="number">0</span>,tc;<span class="comment">//front..</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> cur=gc;cur!=above;cur=c[cur].fa)</span><br><span class="line">		&#123;</span><br><span class="line">			p[++pc]=Opt(cur,len[cur]-c[cur].lim);</span><br><span class="line">			<span class="keyword">if</span>(cur!=gc &amp;&amp; len[cur]&gt;=p[<span class="number">1</span>].fr &amp;&amp; chkmn(f[gc],transfer(cur,gc))) pre[gc]=cur;</span><br><span class="line">		&#125;</span><br><span class="line">		reverse(p+<span class="number">1</span>,p+<span class="number">1</span>+pc);</span><br><span class="line"></span><br><span class="line">		Others(gc,<span class="number">0</span>,t,tc=<span class="number">0</span>);sort(t+<span class="number">1</span>,t+<span class="number">1</span>+tc);</span><br><span class="line">		<span class="keyword">for</span>(top=<span class="number">0</span>;tc;tc--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> goal=t[tc].id;</span><br><span class="line">			<span class="keyword">while</span>(pc &amp;&amp; len[p[pc].id]&gt;=t[tc].fr)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="function">Point <span class="title">cur</span><span class="params">(p[pc--].id)</span></span>;</span><br><span class="line">				<span class="keyword">while</span>(top&gt;=<span class="number">2</span> &amp;&amp; fcmp(Outer(<span class="built_in">stack</span>[top]-<span class="built_in">stack</span>[top<span class="number">-1</span>],cur-<span class="built_in">stack</span>[top]))&gt;=<span class="number">0</span>)</span><br><span class="line">				<span class="comment">//if..........!!</span></span><br><span class="line">					top--;</span><br><span class="line">				<span class="built_in">stack</span>[++top]=cur;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">int</span> best=BinarySearch(c[goal].k);</span><br><span class="line">			<span class="keyword">if</span>(best &amp;&amp; chkmn(f[goal],transfer(best,goal))) pre[goal]=best;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[gc];e;e=e-&gt;pre)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">			<span class="keyword">if</span>(!ud[u]) DC(u);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Prep</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">memset</span>(f,<span class="number">127</span>,<span class="keyword">sizeof</span>(f));f[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">int</span> <span class="built_in">stack</span>[MAXN],top;</span><br><span class="line">		<span class="built_in">stack</span>[top=<span class="number">1</span>]=<span class="number">1</span>;dep[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(top)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> cur=<span class="built_in">stack</span>[top--];</span><br><span class="line">			<span class="keyword">for</span>(Edge *e=id[cur];e;e=e-&gt;pre)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">				<span class="keyword">if</span>(dep[u]) <span class="keyword">continue</span>;</span><br><span class="line">				<span class="built_in">stack</span>[++top]=u;</span><br><span class="line">				dep[u]=dep[cur]+<span class="number">1</span>;</span><br><span class="line">				len[u]=len[cur]+c[u].s;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Prep();</span><br><span class="line">		DC(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h1><p>这是第二次做到考算法新推广的题
+第一次是用替罪羊思想维护动态点分治
+做不出来甚至看不懂题解说明这种算法本身就学的不扎实
+以后再碰到这种情况也应该像这样写出退化版问题的程序，可以加深对原算法和推广的算法的理解</p>
+<h1 id="Code-4"><a href="#Code-4" class="headerlink" title="Code"></a>Code</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Code by Lucida</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdtr1c++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> get(x) scanf(<span class="meta-string">"%d"</span>,&amp;x)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> put(x) printf(<span class="meta-string">"%d"</span>,x)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> get64(x) scanf(<span class="meta-string">"%lld"</span>,&amp;x)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> put64(x) printf(<span class="meta-string">"%lld"</span>,x)</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> ld;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">inline</span> <span class="title">bool</span> <span class="title">chkmx</span>(<span class="title">T</span> &amp;<span class="title">a</span>,<span class="title">const</span> <span class="title">T</span> &amp;<span class="title">b</span>)&#123;</span><span class="keyword">return</span> a&lt;b?a=b,<span class="number">1</span>:<span class="number">0</span>;&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; <span class="title">inline</span> <span class="title">bool</span> <span class="title">chkmn</span>(<span class="title">T</span> &amp;<span class="title">a</span>,<span class="title">const</span> <span class="title">T</span> &amp;<span class="title">b</span>)&#123;</span><span class="keyword">return</span> a&gt;b?a=b,<span class="number">1</span>:<span class="number">0</span>;&#125;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::lower_bound;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::min;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::copy;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::sort;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::merge;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::greater;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::reverse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN=<span class="number">2e5</span>+<span class="number">11</span>;</span><br><span class="line"><span class="keyword">const</span> ld eps=<span class="number">1e-5</span>,inf=<span class="number">1e100</span>;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">fcmp</span><span class="params">(ld x)</span></span>&#123;<span class="keyword">return</span> -eps&lt;x &amp;&amp; x&lt;eps?<span class="number">0</span>:(x&lt;<span class="number">0</span>?<span class="number">-1</span>:<span class="number">1</span>);&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">City</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> fa;ll s,k,b,lim;</span><br><span class="line">&#125;c[MAXN];<span class="keyword">int</span> n;</span><br><span class="line">ll f[MAXN];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Edge *pre;<span class="keyword">int</span> to;</span><br><span class="line">	Edge(Edge *pre,<span class="keyword">int</span> to):pre(pre),to(to)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> *<span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>;</span><br><span class="line">&#125;*Edge_Me=(Edge*)<span class="built_in">malloc</span>((MAXN&lt;&lt;<span class="number">1</span>)*<span class="keyword">sizeof</span>(Edge)),*id[MAXN];</span><br><span class="line"><span class="keyword">void</span> *Edge::<span class="function"><span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>&#123;<span class="keyword">return</span> Edge_Me++;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Adde</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;id[x]=<span class="keyword">new</span> Edge(id[x],y),id[y]=<span class="keyword">new</span> Edge(id[y],x);&#125;</span><br><span class="line"></span><br><span class="line">ll len[MAXN];</span><br><span class="line"><span class="keyword">bool</span> ud[MAXN]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> sz[MAXN];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Opt</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> id;ll fr;</span><br><span class="line">	Opt()&#123;&#125;Opt(<span class="keyword">int</span> id,ll fr):id(id),fr(fr)&#123;&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Opt &amp;a) <span class="keyword">const</span>&#123;<span class="keyword">return</span> fr&lt;a.fr;&#125;</span><br><span class="line">&#125;p[MAXN],t[MAXN];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">CmpID</span><span class="params">(<span class="keyword">const</span> Opt &amp;a,<span class="keyword">const</span> Opt &amp;b)</span></span>&#123;<span class="keyword">return</span> a.id&lt;b.id;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	ll x,y;<span class="keyword">int</span> id;</span><br><span class="line">	Point()&#123;&#125;</span><br><span class="line">	Point(<span class="keyword">int</span> id):id(id)&#123;x=len[id];y=f[id];&#125;</span><br><span class="line">	Point(ll x,ll y):x(x),y(y)&#123;&#125;</span><br><span class="line">	Point <span class="keyword">operator</span> -(<span class="keyword">const</span> Point &amp;a)<span class="keyword">const</span>&#123;<span class="keyword">return</span> Point(x-a.x,y-a.y);&#125;</span><br><span class="line">&#125;<span class="built_in">stack</span>[MAXN];<span class="keyword">int</span> top;</span><br><span class="line"><span class="function">ld <span class="title">Outer</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> (ld)a.x*b.y-(ld)a.y*b.x;&#125;<span class="comment">//叉积爆ll没加强转ld..........</span></span><br><span class="line"><span class="function">ld <span class="title">Slope</span><span class="params">(Point a,Point b)</span></span>&#123;<span class="keyword">return</span> ((ld)a.y-b.y)/(a.x-b.x);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalSize</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	sz[pos]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">		<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">		CalSize(u,pos);</span><br><span class="line">		sz[pos]+=sz[u];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DP</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from,<span class="keyword">int</span> tol)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> f[MAXN]=&#123;INT_MAX&#125;;</span><br><span class="line">	<span class="keyword">int</span> res=<span class="number">0</span>,temp;f[pos]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">		<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">		temp=DP(u,pos,tol);</span><br><span class="line">		<span class="keyword">if</span>(res==<span class="number">0</span> || f[res]&gt;f[temp]) res=temp;</span><br><span class="line">		chkmx(f[pos],sz[u]);</span><br><span class="line">	&#125;</span><br><span class="line">	chkmx(f[pos],tol-sz[pos]<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">return</span> f[res]&lt;f[pos]?res:pos;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Center</span><span class="params">(<span class="keyword">int</span> rt)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	CalSize(rt,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> DP(rt,<span class="number">0</span>,sz[rt]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Others</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> from,Opt *p,<span class="keyword">int</span> &amp;pc)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!ud[pos]) p[++pc]=Opt(pos,len[pos]-c[pos].lim);</span><br><span class="line">	<span class="keyword">for</span>(Edge *e=id[pos];e;e=e-&gt;pre)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">		<span class="keyword">if</span>(ud[u] || u==from) <span class="keyword">continue</span>;</span><br><span class="line">		Others(u,pos,p,pc);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(ll k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!top) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> L=<span class="number">1</span>,R=top;</span><br><span class="line">	<span class="keyword">while</span>(L!=R)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> Mid=(L+R+<span class="number">1</span>)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(Mid==<span class="number">1</span> || fcmp(Slope(<span class="built_in">stack</span>[Mid],<span class="built_in">stack</span>[Mid<span class="number">-1</span>])-k)&gt;=<span class="number">0</span>) L=Mid;</span><br><span class="line">		<span class="comment">//stack[top]???....</span></span><br><span class="line">		<span class="keyword">else</span> R=Mid<span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>[L].id;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">transfer</span><span class="params">(<span class="keyword">int</span> j,<span class="keyword">int</span> i)</span> </span>&#123;<span class="keyword">return</span> (f[j]+(len[i]-len[j])*c[i].k+c[i].b);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DC</span><span class="params">(<span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!pos || ud[pos]) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">int</span> gc=Center(pos);</span><br><span class="line">	<span class="keyword">int</span> above=gc;</span><br><span class="line">	<span class="keyword">while</span>(!ud[above]) above=c[above].fa; </span><br><span class="line">	ud[gc]=<span class="number">1</span>;</span><br><span class="line">	DC(c[gc].fa);<span class="comment">//</span></span><br><span class="line">	<span class="keyword">int</span> pc=<span class="number">0</span>,tc;<span class="comment">//front..</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> cur=gc;cur!=above;cur=c[cur].fa)</span><br><span class="line">	&#123;</span><br><span class="line">		p[++pc]=Opt(cur,len[cur]-c[cur].lim);</span><br><span class="line">		<span class="keyword">if</span>(cur!=gc &amp;&amp; len[cur]&gt;=p[<span class="number">1</span>].fr) chkmn(f[gc],transfer(cur,gc));</span><br><span class="line">	&#125;</span><br><span class="line">	reverse(p+<span class="number">1</span>,p+<span class="number">1</span>+pc);</span><br><span class="line"></span><br><span class="line">	Others(gc,<span class="number">0</span>,t,tc=<span class="number">0</span>);sort(t+<span class="number">1</span>,t+<span class="number">1</span>+tc);</span><br><span class="line">	<span class="keyword">for</span>(top=<span class="number">0</span>;tc;tc--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> goal=t[tc].id;</span><br><span class="line">		<span class="keyword">while</span>(pc &amp;&amp; len[p[pc].id]&gt;=t[tc].fr)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="function">Point <span class="title">cur</span><span class="params">(p[pc--].id)</span></span>;</span><br><span class="line">			<span class="keyword">while</span>(top&gt;=<span class="number">2</span> &amp;&amp; fcmp(Outer(<span class="built_in">stack</span>[top]-<span class="built_in">stack</span>[top<span class="number">-1</span>],cur-<span class="built_in">stack</span>[top]))&gt;=<span class="number">0</span>)</span><br><span class="line">				top--;</span><br><span class="line">			<span class="built_in">stack</span>[++top]=cur;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> best=BinarySearch(c[goal].k);</span><br><span class="line">		<span class="keyword">if</span>(best) chkmn(f[goal],transfer(best,goal));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(Edge *e=id[gc];e;e=e-&gt;pre)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">		<span class="keyword">if</span>(!ud[u]) DC(u);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Prep</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(f,<span class="number">127</span>,<span class="keyword">sizeof</span>(f));f[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> <span class="built_in">stack</span>[MAXN],top;</span><br><span class="line">	<span class="built_in">stack</span>[top=<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(top)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> cur=<span class="built_in">stack</span>[top--];</span><br><span class="line">		<span class="keyword">for</span>(Edge *e=id[cur];e;e=e-&gt;pre)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u=e-&gt;to;</span><br><span class="line">			<span class="keyword">if</span>(len[u] || u==<span class="number">1</span>) <span class="keyword">continue</span>;</span><br><span class="line">			<span class="built_in">stack</span>[++top]=u;</span><br><span class="line">			len[u]=len[cur]+c[u].s;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;get(n),get(t);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		get(c[i].fa);</span><br><span class="line">		get64(c[i].s);</span><br><span class="line">		get64(c[i].k),get64(c[i].b);</span><br><span class="line">		get64(c[i].lim);</span><br><span class="line">		Adde(c[i].fa,i);	</span><br><span class="line">	&#125;</span><br><span class="line">	Prep();</span><br><span class="line">	DC(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;++i)</span><br><span class="line">		put64(f[i]),<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DP/" rel="tag"># DP</a>
+          
+            <a href="/tags/分治/" rel="tag"># 分治</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/BZOJ1568/" rel="next" title="BZOJ 1568 BlueMary开公司">
+                <i class="fa fa-chevron-left"></i> BZOJ 1568 BlueMary开公司
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/BZOJ4515/" rel="prev" title="BZOJ 4515 游戏">
+                BZOJ 4515 游戏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/luz.png"
+                alt="Lucida" />
+            
+              <p class="site-author-name" itemprop="name">Lucida</p>
+              <p class="site-description motion-element" itemprop="description">It's been a while.</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">222</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">127</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Link"><span class="nav-number">1.</span> <span class="nav-text">Link</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#30pts"><span class="nav-number">2.1.</span> <span class="nav-text">30pts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.1.1.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#40pts"><span class="nav-number">2.2.</span> <span class="nav-text">40pts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#50pts"><span class="nav-number">2.3.</span> <span class="nav-text">50pts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#100pts"><span class="nav-number">2.4.</span> <span class="nav-text">100pts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution-1"><span class="nav-number">3.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-4"><span class="nav-number">4.</span> <span class="nav-text">Code</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lucida</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css" type="text/css">
+
+   
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

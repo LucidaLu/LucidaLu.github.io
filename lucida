@@ -1,0 +1,77 @@
+//Code by Lucida
+#include<bits/stdtr1c++.h>
+typedef long long int64;
+
+namespace IO {
+	struct Ist {
+		template <class T> Ist &operator >>(T &x);
+		template <class T> Ist &operator >>(T *x);
+		operator bool() const {
+			return feof(stdin);
+		}
+	}is;
+	template <class T> Ist &Ist::operator >>(T &x) {
+		static bool f;static char ch;
+		for(f=0,ch=0;ch<'0' || '9'<ch;ch=getchar()) f|=ch=='-';
+		for(x=0;'0'<=ch && ch<='9';ch=getchar()) (x*=10)+=ch-'0';
+		x=f?-x:x;
+		return *this;
+	}
+	template <class T> Ist &Ist::operator >>(T *x) {
+		while(*x=getchar(),(*x==' ' || *x=='\r' || *x=='\n' || *x==EOF));
+		x++;
+		while(*x=getchar(),(*x!=' ' && *x!='\r' && *x!='\n' && *x!=EOF))
+			x++;
+		*x=0;
+		return *this;
+	}
+	template <> Ist &Ist::operator >>(double &x) {
+		scanf("%lf",&x);
+		return *this;
+	}
+	template <> Ist &Ist::operator >>(char &x) {
+		while(x=getchar(),((x<'0' || '9'<x) && (x<'a' || 'z'<x) && (x<'A' || 'Z'<x)));
+		return *this;
+	}
+
+	struct Ost {
+		template <class T> Ost &operator <<(T x);
+		template <class T> Ost &operator <<(T *x);
+	}os;
+	template <class T> Ost &Ost::operator <<(T x) {
+		if(!x)
+			putchar('0');
+		else {
+			if(x<0) putchar('-'),x=-x;
+			static char stack[30]={0};
+			char *top=stack;
+			for(;x;x/=10) *++top=x%10+'0';
+			while(*top) putchar(*top--);
+		}
+		return *this;
+	}
+	template <class T> Ost &Ost::operator <<(T* x) {
+		while(*x) putchar(*x++);
+		return *this;
+	}
+	template <>	Ost &Ost::operator <<(double x) {
+		printf("%lf",x);
+		return *this;
+	}
+	template <> Ost &Ost::operator <<(char x) {
+		putchar(x);
+		return *this;
+	}
+}
+
+template <class T> inline bool chkmx(T &a,const T &b) {
+	return a<b?a=b,1:0;
+}
+template <class T> inline bool chkmn(T &a,const T &b) {
+	return a>b?a=b,1:0;
+}
+
+using IO::is;
+using IO::os;
+
+
